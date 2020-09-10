@@ -1,10 +1,8 @@
-import { h, Component } from "preact";
-import classNames from "classnames";
-import { getImgExample } from "./utils";
+import { h, Component } from 'preact';
+import classNames from 'classnames';
+import { getImgExample } from './utils';
 
-import "./ImageExample.scss";
-import exampleSide from "../../images/HV-side.png";
-import exampleFront from "../../images/HV-front.png";
+import './ImageExample.scss';
 
 /**
  * Help component.
@@ -54,7 +52,7 @@ class ImageExample extends Component {
           See example
         </button>
         <div
-          className={classNames("image-example__img", {
+          className={classNames('image-example__img', {
             active: isImageActive,
           })}
           style={imageStyle}
@@ -97,7 +95,7 @@ class ImageExample extends Component {
             </button>
             <img
               src={getImgExample(type, gender)}
-              alt={`${type === "side" ? "Side" : "Front"} example`}
+              alt={`${type === 'side' ? 'Side' : 'Front'} example`}
             />
           </figure>
         </div>

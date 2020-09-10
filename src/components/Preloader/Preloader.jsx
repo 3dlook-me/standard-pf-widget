@@ -1,24 +1,24 @@
-import { h } from "preact";
-import classNames from "classnames";
+import { h } from 'preact';
+import classNames from 'classnames';
 
-import "./Preloader.scss";
-import firstStageFemale from "../../images/stage_1.svg";
-import secondStageFemale from "../../images/stage_2.svg";
-import thirdStageFemale from "../../images/stage_3.svg";
-import indicator from "../../images/line.svg";
-import spinner from "../../images/loader-for-phone.svg";
-import phone from "../../images/phone-for-loader.svg";
+import './Preloader.scss';
+import firstStageFemale from '../../images/stage_1.svg';
+import secondStageFemale from '../../images/stage_2.svg';
+import thirdStageFemale from '../../images/stage_3.svg';
+import indicator from '../../images/line.svg';
+import spinner from '../../images/loader-for-phone.svg';
+import phone from '../../images/phone-for-loader.svg';
 
-import stageMale from "../../images/friend_male_front.png";
+import stageMale from '../../images/friend_male_front.png';
 
 /**
  * Preloader component
  */
 const Preloader = ({ isActive, status, isMobile, gender }) => (
-  <div className={`preloader ${isActive ? "active" : ""}`}>
+  <div className={`preloader ${isActive ? 'active' : ''}`}>
     <div
-      className={classNames("preloader__instructions", {
-        "preloader__instructions--active": !isMobile && status === "",
+      className={classNames('preloader__instructions', {
+        'preloader__instructions--active': !isMobile && status === '',
       })}
     >
       <div className="preloader__instructions-phone-wrap">
@@ -50,17 +50,17 @@ const Preloader = ({ isActive, status, isMobile, gender }) => (
     <div className="preloader__animation">
       <img
         className="preloader__animation-stage preloader__animation-stage--first"
-        src={gender === "female" ? firstStageFemale : stageMale}
+        src={gender === 'female' ? firstStageFemale : stageMale}
         alt="stage-1"
       />
       <img
         className="preloader__animation-stage preloader__animation-stage--second"
-        src={gender === "female" ? secondStageFemale : stageMale}
+        src={gender === 'female' ? secondStageFemale : stageMale}
         alt="stage-2"
       />
       <img
         className="preloader__animation-stage preloader__animation-stage--third"
-        src={gender === "female" ? thirdStageFemale : stageMale}
+        src={gender === 'female' ? thirdStageFemale : stageMale}
         alt="stage-3"
       />
       <img

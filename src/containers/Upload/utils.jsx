@@ -1,7 +1,7 @@
-import { flow } from "../../configs/flow";
+import { flow } from '../../configs/flow';
 
 export const getImg = (isFrontImg, gender) => {
-  const modeImg = isFrontImg ? "Front" : "Side";
+  const modeImg = isFrontImg ? 'Front' : 'Side';
 
   return flow[`${gender}Friend`]
     ? flow[`${gender}Friend`][`img${modeImg}`]

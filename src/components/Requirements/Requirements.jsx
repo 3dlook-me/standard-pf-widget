@@ -1,8 +1,8 @@
-import { h, Component, createRef, Fragment } from "preact";
+import { h, Component, createRef, Fragment } from 'preact';
 
-import { Loader } from "../Loader";
+import { Loader } from '../Loader';
 
-import "./Requirements.scss";
+import './Requirements.scss';
 
 /**
  * Requirements component

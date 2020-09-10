@@ -1,16 +1,16 @@
-import { h, Component } from "preact";
-import { route } from "preact-router";
-import { connect } from "react-redux";
+import { h, Component } from 'preact';
+import { route } from 'preact-router';
+import { connect } from 'react-redux';
 
-import actions from "../../store/actions";
-import FlowService from "../../services/flowService";
-import { gaHardValidationError, gaRetakePhotoError } from "../../helpers/ga";
-import { mobileFlowStatusUpdate } from "../../helpers/utils";
-import { ImageExample } from "../../components";
+import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
+import { gaHardValidationError, gaRetakePhotoError } from '../../helpers/ga';
+import { mobileFlowStatusUpdate } from '../../helpers/utils';
+import { ImageExample } from '../../components';
 
-import "./HardValidation.scss";
-import cryingIcon1x from "../../images/crying.png";
-import cryingIcon2x from "../../images/crying@2x.png";
+import './HardValidation.scss';
+import cryingIcon1x from '../../images/crying.png';
+import cryingIcon2x from '../../images/crying@2x.png';
 
 /**
  * Hard validation page component
@@ -22,7 +22,7 @@ class HardValidation extends Component {
     const { flowId, token } = this.props;
     this.flow = new FlowService(token);
     this.flow.setFlowId(flowId);
-    this.flow.updateLocalState({ processStatus: "" });
+    this.flow.updateLocalState({ processStatus: '' });
 
     const { setPageReloadStatus } = props;
 
@@ -30,11 +30,11 @@ class HardValidation extends Component {
       setPageReloadStatus(true);
     };
 
-    window.addEventListener("unload", this.reloadListener);
+    window.addEventListener('unload', this.reloadListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("unload", this.reloadListener);
+    window.removeEventListener('unload', this.reloadListener);
   }
 
   componentDidMount() {
@@ -65,7 +65,7 @@ class HardValidation extends Component {
   };
 
   back = () => {
-    route("/upload", true);
+    route('/upload', true);
 
     gaRetakePhotoError();
   };
@@ -85,26 +85,26 @@ class HardValidation extends Component {
     let topMessageFront;
 
     if (front) {
-      if (front === "Side photo in the front") {
+      if (front === 'Side photo in the front') {
         sideInTheFront = true;
         topMessageFront =
-          "It seems you uploaded side photo instead of the front one";
-        tipMessageFront = "Please upload the front photo.";
+          'It seems you uploaded side photo instead of the front one';
+        tipMessageFront = 'Please upload the front photo.';
       } else if (front === "Can't detect the human body") {
         cannotDetectBodyFront = true;
-        topMessageFront = "We can’t detect your body on the front photo";
+        topMessageFront = 'We can’t detect your body on the front photo';
         tipMessageFront =
-          "Please retake the front photo. Make sure your whole body is present on the photo.";
-      } else if (front === "The body is not full") {
+          'Please retake the front photo. Make sure your whole body is present on the photo.';
+      } else if (front === 'The body is not full') {
         bodyIsNotFullFront = true;
-        topMessageFront = "Your full body should be present on the front photo";
+        topMessageFront = 'Your full body should be present on the front photo';
         tipMessageFront =
-          "Please retake the front photo. Make sure your whole body is present and the pose is correct.";
-      } else if (front.indexOf("The pose is wrong, check: ") !== -1) {
+          'Please retake the front photo. Make sure your whole body is present and the pose is correct.';
+      } else if (front.indexOf('The pose is wrong, check: ') !== -1) {
         wrongFrontPose = true;
 
-        wrongPartsFront = front.replace("The pose is wrong, check: ", "");
-        wrongPartsFront = wrongPartsFront.replace(/_/g, " ");
+        wrongPartsFront = front.replace('The pose is wrong, check: ', '');
+        wrongPartsFront = wrongPartsFront.replace(/_/g, ' ');
         topMessageFront = `The pose on the front photo is a bit off, we couldn’t detect your ${wrongPartsFront}`;
         tipMessageFront = `Make sure your ${wrongPartsFront} is present on a photo`;
       }
@@ -120,26 +120,26 @@ class HardValidation extends Component {
     let topMessageSide;
 
     if (side) {
-      if (side === "Front photo in the side") {
+      if (side === 'Front photo in the side') {
         sideInTheSide = true;
         topMessageSide =
-          "It seems you uploaded front photo instead of the side one";
-        tipMessageSide = "Please upload the side photo.";
+          'It seems you uploaded front photo instead of the side one';
+        tipMessageSide = 'Please upload the side photo.';
       } else if (side === "Can't detect the human body") {
         cannotDetectBodySide = true;
-        topMessageSide = "We can’t detect your body on the side photo";
+        topMessageSide = 'We can’t detect your body on the side photo';
         tipMessageSide =
-          "Please retake the side photo. Make sure your whole body is present on the photo.";
-      } else if (side === "The body is not full") {
+          'Please retake the side photo. Make sure your whole body is present on the photo.';
+      } else if (side === 'The body is not full') {
         bodyIsNotFullSide = true;
-        topMessageSide = "Your full body should be present on the side photo";
+        topMessageSide = 'Your full body should be present on the side photo';
         tipMessageSide =
-          "Please retake the side photo. Make sure your whole body is present and the pose is correct.";
-      } else if (side.indexOf("The pose is wrong, check: ") !== -1) {
+          'Please retake the side photo. Make sure your whole body is present and the pose is correct.';
+      } else if (side.indexOf('The pose is wrong, check: ') !== -1) {
         wrongSidePose = true;
 
-        wrongPartsSide = side.replace("The pose is wrong, check: ", "");
-        wrongPartsSide = wrongPartsSide.replace(/_/g, " ");
+        wrongPartsSide = side.replace('The pose is wrong, check: ', '');
+        wrongPartsSide = wrongPartsSide.replace(/_/g, ' ');
         topMessageSide = `The pose on the side photo is a bit off, we couldn’t detect your ${wrongPartsSide}`;
         tipMessageSide = `Make sure your ${wrongPartsSide} is present on a photo`;
       }

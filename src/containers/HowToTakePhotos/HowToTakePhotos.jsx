@@ -1,20 +1,15 @@
-import {
-  h,
-  Component,
-  createRef,
-} from 'preact';
-import { connect } from 'react-redux';
-import { Link } from 'preact-router';
+import { h, Component, createRef } from "preact";
+import { connect } from "react-redux";
+import { Link } from "preact-router";
 
-import actions from '../../store/actions';
-import { Loader, Stepper } from '../../components';
+import actions from "../../store/actions";
+import { Loader, Stepper } from "../../components";
 
-import './HowToTakePhotos.scss';
+import "./HowToTakePhotos.scss";
 
-import videoTableMode from '../../video/table-flow-example.mp4';
-import videoFriendMode from '../../video/friend-flow-example.mp4';
-import FlowService from '../../services/flowService';
-import { mobileFlowStatusUpdate } from '../../helpers/utils';
+import FlowService from "../../services/flowService";
+import { mobileFlowStatusUpdate } from "../../helpers/utils";
+import { getVideo } from "./utils";
 
 /**
  * HowToTakePhotos video page component
@@ -29,8 +24,8 @@ class HowToTakePhotos extends Component {
 
     this.state = {
       videoText: props.isTableFlow
-        ? 'Stand your device upright on a table. \n You can use an object to help hold it up.'
-        : 'Ask someone to help take 2 photos of you. \n Keep the device at 90° angle at the waistline.',
+        ? "Stand your device upright on a table. \n You can use an object to help hold it up."
+        : "Ask someone to help take 2 photos of you. \n Keep the device at 90° angle at the waistline.",
       isVideoLoaded: false,
     };
 
@@ -40,19 +35,19 @@ class HowToTakePhotos extends Component {
       setPageReloadStatus(true);
     };
 
-    window.addEventListener('unload', this.reloadListener);
+    window.addEventListener("unload", this.reloadListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('unload', this.reloadListener);
+    window.removeEventListener("unload", this.reloadListener);
   }
 
-  componentDidMount =() => {
+  componentDidMount = () => {
     const { current } = this.$video;
 
     current.play();
 
-    current.addEventListener('timeupdate', this.handleProgress);
+    current.addEventListener("timeupdate", this.handleProgress);
 
     const {
       isFromDesktopToMobile,
@@ -72,11 +67,11 @@ class HowToTakePhotos extends Component {
 
       mobileFlowStatusUpdate(this.flow, flowState);
     }
-  }
+  };
 
   componentWillUnmount = () => {
-    this.$video.current.removeEventListener('timeupdate', this.handleProgress);
-  }
+    this.$video.current.removeEventListener("timeupdate", this.handleProgress);
+  };
 
   handleProgress = () => {
     const { current } = this.$video;
@@ -90,70 +85,69 @@ class HowToTakePhotos extends Component {
     }
 
     this.$videoProgress.current.style.flexBasis = `${percent}%`;
-  }
+  };
 
   restartVideo = () => {
     const { current } = this.$video;
 
     current.currentTime = 0;
     current.play();
-  }
+  };
 
   setTableFlowVideoText = (time) => {
     if (time < 3.8) {
       this.setState({
-        videoText: 'Stand your device upright on a table. \n You can use an object to help hold it up.',
+        videoText:
+          "Stand your device upright on a table. \n You can use an object to help hold it up.",
       });
     } else if (time > 3.8 && time < 7) {
       this.setState({
-        videoText: 'Angle the phone so that the arrows line up on the green',
+        videoText: "Angle the phone so that the arrows line up on the green",
       });
     } else if (time > 7 && time < 13.5) {
       this.setState({
-        videoText: 'Take 3 to 4 steps away from your device.',
+        videoText: "Take 3 to 4 steps away from your device.",
       });
     } else if (time > 13.5) {
       this.setState({
-        videoText: 'Please turn up the volume and follow the voice instructions.',
+        videoText:
+          "Please turn up the volume and follow the voice instructions.",
       });
     }
-  }
+  };
 
   setFriendFlowVideoText = (time) => {
     if (time < 3) {
       this.setState({
-        videoText: 'Ask someone to help take 2 photos of you. \n Keep the device at 90° angle at the waistline.',
+        videoText:
+          "Ask someone to help take 2 photos of you. \n Keep the device at 90° angle at the waistline.",
       });
     } else if (time > 3) {
       this.setState({
-        videoText: 'For the side photo turn to your left.',
+        videoText: "For the side photo turn to your left.",
       });
     }
-  }
+  };
 
   onVideoLoad = () => {
     this.setState({
       isVideoLoaded: true,
     });
-  }
+  };
 
   render() {
-    const { isTableFlow } = this.props;
+    const { isTableFlow, gender } = this.props;
     const { videoText, isVideoLoaded } = this.state;
-    const videoTrack = isTableFlow ? videoTableMode : videoFriendMode;
 
     return (
       <div className="screen active">
         <Stepper steps="9" current="6" />
 
         <div className="screen__content how-to-take-photos">
-
           <div className="how-to-take-photos__content">
             <h3 className="screen__title">how to take photos</h3>
 
-            {!isVideoLoaded ? (
-              <Loader />
-            ) : null}
+            {!isVideoLoaded ? <Loader /> : null}
 
             <div className="how-to-take-photos__video-wrap">
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -168,7 +162,7 @@ class HowToTakePhotos extends Component {
                 width="960"
                 height="540"
               >
-                <source src={videoTrack} type="video/mp4" />
+                <source src={getVideo(isTableFlow, gender)} type="video/mp4" />
               </video>
 
               <div className="how-to-take-photos__progress-bar">
@@ -193,7 +187,9 @@ class HowToTakePhotos extends Component {
         </div>
 
         <div className="screen__footer">
-          <Link className="button" href="/upload">Next</Link>
+          <Link className="button" href="/upload">
+            Next
+          </Link>
         </div>
       </div>
     );

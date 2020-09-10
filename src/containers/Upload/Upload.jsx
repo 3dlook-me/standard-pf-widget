@@ -1,38 +1,36 @@
-import {
-  h,
-  Component,
-  Fragment,
-} from 'preact';
-import { route } from 'preact-router';
-import API from '@3dlook/saia-sdk/lib/api';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import Camera from '@3dlook/camera/src/Camera';
+import { h, Component, Fragment } from "preact";
+import { route } from "preact-router";
+import API from "@3dlook/saia-sdk/lib/api";
+import { connect } from "react-redux";
+import classNames from "classnames";
+import Camera from "@3dlook/camera/src/Camera";
 
-import actions from '../../store/actions';
-import FlowService from '../../services/flowService';
-import { store } from '../../store';
+import actions from "../../store/actions";
+import FlowService from "../../services/flowService";
+import { store } from "../../store";
 import {
   send,
   transformRecomendations,
   wait,
-  mobileFlowStatusUpdate, isMobileDevice,
-} from '../../helpers/utils';
+  mobileFlowStatusUpdate,
+  isMobileDevice,
+} from "../../helpers/utils";
 import {
   gaUploadOnContinue,
   gaOpenCameraFrontPhoto,
   gaOpenCameraSidePhoto,
-} from '../../helpers/ga';
+} from "../../helpers/ga";
 import {
   Preloader,
   Stepper,
   UploadBlock,
   Requirements,
-} from '../../components';
+} from "../../components";
+import { getImg, getVideoRequirements } from "../../containers/Upload/utils";
 
-import './Upload.scss';
-import frontExample from '../../images/friend_front.png';
-import sideExample from '../../images/friend_side.png';
+import "./Upload.scss";
+import frontExample from "../../images/friend_front.png";
+import sideExample from "../../images/friend_side.png";
 
 let isPhoneLocked = false;
 let isRefreshed = false;
@@ -69,7 +67,7 @@ class Upload extends Component {
       setPageReloadStatus(true);
     };
 
-    window.addEventListener('unload', this.reloadListener);
+    window.addEventListener("unload", this.reloadListener);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,10 +83,16 @@ class Upload extends Component {
 
     clearInterval(this.timer);
 
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
-    document.removeEventListener('webkitvisibilitychange', this.handleVisibilityChange);
-    window.removeEventListener('unload', this.reloadListener);
-    window.removeEventListener('offline', this.setOfflineStatus);
+    document.removeEventListener(
+      "visibilitychange",
+      this.handleVisibilityChange
+    );
+    document.removeEventListener(
+      "webkitvisibilitychange",
+      this.handleVisibilityChange
+    );
+    window.removeEventListener("unload", this.reloadListener);
+    window.removeEventListener("offline", this.setOfflineStatus);
   }
 
   componentDidMount() {
@@ -102,7 +106,7 @@ class Upload extends Component {
       isFromDesktopToMobile,
     } = this.props;
 
-    window.addEventListener('offline', this.setOfflineStatus);
+    window.addEventListener("offline", this.setOfflineStatus);
 
     // if camera is active when page refreshed
     if (camera) {
@@ -155,7 +159,7 @@ class Upload extends Component {
       hardValidation,
     } = this.props;
 
-    setHeaderIconsStyle('default');
+    setHeaderIconsStyle("default");
     addFrontImage(file);
 
     if (isTableFlow) {
@@ -167,7 +171,7 @@ class Upload extends Component {
     } else {
       setCamera(null);
     }
-  }
+  };
 
   /**
    * Save side image to state
@@ -181,7 +185,7 @@ class Upload extends Component {
       isTableFlow,
     } = this.props;
 
-    setHeaderIconsStyle('default');
+    setHeaderIconsStyle("default");
 
     if (!isTableFlow) {
       setCamera(null);
@@ -199,13 +203,13 @@ class Upload extends Component {
     }
 
     addSideImage(file);
-  }
+  };
 
   turnOffCamera = () => {
     const { setCamera } = this.props;
 
     setCamera(null);
-  }
+  };
 
   /**
    * On next button click handler
@@ -230,9 +234,7 @@ class Upload extends Component {
       deviceCoordinates,
     } = props;
 
-    let {
-      personId,
-    } = props;
+    let { personId } = props;
 
     const {
       setRecommendations,
@@ -271,12 +273,12 @@ class Upload extends Component {
       let hidden;
       let visibilityChange;
 
-      if (typeof document.hidden !== 'undefined') {
-        hidden = 'hidden';
-        visibilityChange = 'visibilitychange';
-      } else if (typeof document.webkitHidden !== 'undefined') {
-        hidden = 'webkitHidden';
-        visibilityChange = 'webkitvisibilitychange';
+      if (typeof document.hidden !== "undefined") {
+        hidden = "hidden";
+        visibilityChange = "visibilitychange";
+      } else if (typeof document.webkitHidden !== "undefined") {
+        hidden = "webkitHidden";
+        visibilityChange = "webkitvisibilitychange";
       }
 
       this.handleVisibilityChange = async () => {
@@ -311,17 +313,19 @@ class Upload extends Component {
 
       if (!personId) {
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Initiating Profile Creation' });
+          this.flow.updateLocalState({
+            processStatus: "Initiating Profile Creation",
+          });
         }
 
-        setProcessingStatus('Initiating Profile Creation');
+        setProcessingStatus("Initiating Profile Creation");
 
         const createdPersonId = await this.api.person.create({
           gender,
           height,
           email,
           ...(weight && { weight }),
-          measurementsType: 'all',
+          measurementsType: "all",
         });
 
         setPersonId(createdPersonId);
@@ -330,22 +334,24 @@ class Upload extends Component {
         await wait(1000);
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Profile Creation Completed!' });
+          this.flow.updateLocalState({
+            processStatus: "Profile Creation Completed!",
+          });
         }
 
-        setProcessingStatus('Profile Creation Completed!');
+        setProcessingStatus("Profile Creation Completed!");
         await wait(1000);
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Photo Uploading' });
+          this.flow.updateLocalState({ processStatus: "Photo Uploading" });
         }
 
-        setProcessingStatus('Photo Uploading');
+        setProcessingStatus("Photo Uploading");
 
         taskSetId = await this.api.person.updateAndCalculate(createdPersonId, {
           ...images,
           deviceCoordinates: { ...deviceCoordinates },
-          measurementsType: 'all',
+          measurementsType: "all",
         });
 
         setTaskId(taskSetId);
@@ -353,17 +359,19 @@ class Upload extends Component {
         await wait(1000);
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Photo Upload Completed!' });
+          this.flow.updateLocalState({
+            processStatus: "Photo Upload Completed!",
+          });
         }
 
-        setProcessingStatus('Photo Upload Completed!');
+        setProcessingStatus("Photo Upload Completed!");
         await wait(1000);
       } else {
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Photo Uploading' });
+          this.flow.updateLocalState({ processStatus: "Photo Uploading" });
         }
 
-        setProcessingStatus('Photo Uploading');
+        setProcessingStatus("Photo Uploading");
 
         await this.api.person.update(personId, {
           ...images,
@@ -382,28 +390,32 @@ class Upload extends Component {
         }
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Photo Upload Completed!' });
+          this.flow.updateLocalState({
+            processStatus: "Photo Upload Completed!",
+          });
         }
 
-        setProcessingStatus('Photo Upload Completed!');
+        setProcessingStatus("Photo Upload Completed!");
         await wait(1000);
       }
 
       if (isFromDesktopToMobile) {
-        this.flow.updateLocalState({ processStatus: 'Calculating your Measurements' });
+        this.flow.updateLocalState({
+          processStatus: "Calculating your Measurements",
+        });
       }
 
-      setProcessingStatus('Calculating your Measurements');
+      setProcessingStatus("Calculating your Measurements");
 
       const person = await this.api.queue.getResults(taskSetId, 4000, personId);
 
       await wait(1000);
 
       if (isFromDesktopToMobile) {
-        this.flow.updateLocalState({ processStatus: 'Sending Your Results' });
+        this.flow.updateLocalState({ processStatus: "Sending Your Results" });
       }
 
-      setProcessingStatus('Sending Your Results');
+      setProcessingStatus("Sending Your Results");
       await wait(1000);
 
       const measurements = {
@@ -426,7 +438,10 @@ class Upload extends Component {
       });
 
       if (isFromDesktopToMobile) {
-        localStorage.setItem('saia-pf-widget-data', JSON.stringify(measurements));
+        localStorage.setItem(
+          "saia-pf-widget-data",
+          JSON.stringify(measurements)
+        );
       }
 
       let recommendations;
@@ -463,19 +478,20 @@ class Upload extends Component {
         setRecommendations(recommendations);
       }
 
-      send('recommendations', recommendations, origin);
+      send("recommendations", recommendations, origin);
 
       gaUploadOnContinue();
 
-      if (!recommendations || (!recommendations.normal
-        && !recommendations.tight
-        && !recommendations.loose)) {
-        route('/not-found', true);
-      // ok, show just recommendations
+      if (
+        !recommendations ||
+        (!recommendations.normal &&
+          !recommendations.tight &&
+          !recommendations.loose)
+      ) {
+        route("/not-found", true);
+        // ok, show just recommendations
       } else {
-        const {
-          id,
-        } = person;
+        const { id } = person;
 
         const customerData = {};
 
@@ -483,26 +499,43 @@ class Upload extends Component {
           customerData.phone = phoneNumber;
         }
 
-        send('data', {
-          ...measurements,
-          personId,
-        }, origin);
+        send(
+          "data",
+          {
+            ...measurements,
+            personId,
+          },
+          origin
+        );
 
-        await this.flow.updateState({
-          saiaPersonId: id,
-        }).then(() => {
-          route('/results', true);
-        });
+        await this.flow
+          .updateState({
+            saiaPersonId: id,
+          })
+          .then(() => {
+            route("/results", true);
+          });
       }
     } catch (error) {
       if (!isPhoneLocked) {
         // hard validation part
-        if (error && error.response && error.response.data && error.response.data.sub_tasks) {
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.sub_tasks
+        ) {
           const subTasks = error.response.data.sub_tasks;
 
-          const frontTask = subTasks.filter((item) => item.name.indexOf('front_') !== -1)[0];
-          const sideTask = subTasks.filter((item) => item.name.indexOf('side_') !== -1)[0];
-          const measurementError = subTasks.filter((item) => item.name.indexOf('measurement_') !== -1)[0];
+          const frontTask = subTasks.filter(
+            (item) => item.name.indexOf("front_") !== -1
+          )[0];
+          const sideTask = subTasks.filter(
+            (item) => item.name.indexOf("side_") !== -1
+          )[0];
+          const measurementError = subTasks.filter(
+            (item) => item.name.indexOf("measurement_") !== -1
+          )[0];
 
           setHardValidation({
             front: frontTask.message,
@@ -527,18 +560,24 @@ class Upload extends Component {
             addSideImage(null);
           }
 
-          route('/hard-validation', true);
+          route("/hard-validation", true);
         } else if (error && error.response && error.response.status === 400) {
-          route('/not-found', true);
+          route("/not-found", true);
         } else if (error && error.response && error.response.data) {
-          const { detail, brand: brandError, body_part: bodyPartError } = error.response.data;
+          const {
+            detail,
+            brand: brandError,
+            body_part: bodyPartError,
+          } = error.response.data;
           alert(detail || brandError || bodyPartError);
-          route('/not-found', true);
+          route("/not-found", true);
         } else {
-          if (error.message.includes('is not specified')) {
+          if (error.message.includes("is not specified")) {
             const { returnUrl } = this.props;
 
-            alert('Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile');
+            alert(
+              "Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile"
+            );
 
             window.location.href = returnUrl;
 
@@ -552,62 +591,58 @@ class Upload extends Component {
 
           console.error(error);
 
-          route('/not-found', true);
+          route("/not-found", true);
         }
       }
     }
-  }
+  };
 
   triggerFrontImage = () => {
     const { setCamera } = this.props;
 
     gaOpenCameraFrontPhoto();
 
-    setCamera('front');
-  }
+    setCamera("front");
+  };
 
   triggerSideImage = () => {
     const { setCamera } = this.props;
 
     gaOpenCameraSidePhoto();
 
-    setCamera('side');
-  }
+    setCamera("side");
+  };
 
-  openPhotoExample =(photoType) => {
+  openPhotoExample = (photoType) => {
     this.setState({
       isPhotoExample: true,
       photoType,
     });
-  }
+  };
 
   closePhotoExample = () => {
     this.setState({
       isPhotoExample: false,
     });
-  }
+  };
 
   setOfflineStatus = () => {
     const { setIsNetwork } = this.props;
 
     setIsNetwork(false);
 
-    alert('Check your internet connection and try again');
+    alert("Check your internet connection and try again");
 
-    route('/not-found', true);
-  }
+    route("/not-found", true);
+  };
 
   disableTableFlow = () => {
-    const {
-      setIsTableFlowDisabled,
-      setIsTableFlow,
-      setCamera,
-    } = this.props;
+    const { setIsTableFlowDisabled, setIsTableFlow, setCamera } = this.props;
 
     setCamera(null);
     setIsTableFlowDisabled(true);
     setIsTableFlow(false);
-  }
+  };
 
   setDeviceCoordinates = (coords) => {
     const {
@@ -616,12 +651,12 @@ class Upload extends Component {
       camera,
     } = this.props;
 
-    if (camera === 'front') {
+    if (camera === "front") {
       addFrontDeviceCoordinates(coords);
     } else {
       addSideDeviceCoordinates(coords);
     }
-  }
+  };
 
   render() {
     const isDesktop = !isMobileDevice();
@@ -649,27 +684,23 @@ class Upload extends Component {
     } = this.props;
 
     let title;
-    let photoBg;
     let frontActive = false;
     let sideActive = false;
 
     if (isTableFlow) {
-      title = 'requirements';
+      title = "requirements";
       frontActive = (!frontImage && !sideImage) || (!frontImage && sideImage);
       sideActive = frontImage && !sideImage;
     } else if ((!frontImage && !sideImage) || (!frontImage && sideImage)) {
-      title = 'Take Front photo';
-      photoBg = frontExample;
+      title = "Take Front photo";
       frontActive = true;
     } else if (frontImage && !sideImage) {
-      title = 'Take Side photo';
-      photoBg = sideExample;
+      title = "Take Side photo";
       sideActive = true;
     }
 
     return (
       <div className="screen active">
-
         {isDesktop ? (
           <div className="tutorial__desktop-msg">
             <h2>Please open this link on your mobile device</h2>
@@ -712,11 +743,15 @@ class Upload extends Component {
                 </div>
               </h3>
 
-              <Requirements isTableFlow={isTableFlow} photoBg={photoBg} />
+              <Requirements
+                isTableFlow={isTableFlow}
+                video={getVideoRequirements(gender)}
+                photoBg={getImg(!isTableFlow && !frontImage, gender)}
+              />
             </div>
             <div className="screen__footer">
               <button
-                className={classNames('button', 'upload__front-image-btn', {
+                className={classNames("button", "upload__front-image-btn", {
                   active: frontActive,
                 })}
                 onClick={this.triggerFrontImage}
@@ -726,7 +761,7 @@ class Upload extends Component {
               </button>
 
               <button
-                className={classNames('button', 'upload__side-image-btn', {
+                className={classNames("button", "upload__side-image-btn", {
                   active: sideActive,
                 })}
                 onClick={this.triggerSideImage}
@@ -742,7 +777,12 @@ class Upload extends Component {
         {/*  <PhotoExample photoType={photoType} closePhotoExample={this.closePhotoExample} /> */}
         {/* ) : null} */}
 
-        <Preloader isActive={isPending} status={sendDataStatus} isMobile={isMobile} />
+        <Preloader
+          isActive={isPending}
+          status={sendDataStatus}
+          isMobile={isMobile}
+          gender={gender}
+        />
 
         {camera ? (
           <Camera

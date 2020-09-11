@@ -1,4 +1,9 @@
-import { h, Component, createRef, Fragment } from 'preact';
+import { 
+  h,
+  Component,
+  createRef,
+  Fragment,
+} from 'preact';
 
 import { Loader } from '../Loader';
 
@@ -35,7 +40,11 @@ class Requirements extends Component {
 
   render() {
     const { isImageExampleLoaded, isVideoLoaded } = this.state;
-    const { isTableFlow, photoBg, video } = this.props;
+    const { 
+      isTableFlow,
+      photoBg,
+      video,
+    } = this.props;
 
     return (
       <Fragment>

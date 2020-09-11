@@ -1,4 +1,8 @@
-import { h, Component, createRef } from 'preact';
+import { 
+  h,
+  Component,
+  createRef,
+} from 'preact';
 import { connect } from 'react-redux';
 import { Link } from 'preact-router';
 
@@ -136,7 +140,7 @@ class HowToTakePhotos extends Component {
   };
 
   render() {
-    const { isTableFlow, gender } = this.props;
+    const { isTableFlow, gender, dfdsf } = this.props;
     const { videoText, isVideoLoaded } = this.state;
 
     return (

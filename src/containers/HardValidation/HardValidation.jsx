@@ -40,7 +40,11 @@ class HardValidation extends Component {
   componentDidMount() {
     gaHardValidationError();
 
-    const { pageReloadStatus, isFromDesktopToMobile, setTaskId } = this.props;
+    const { 
+      pageReloadStatus,
+      isFromDesktopToMobile,
+      setTaskId,
+    } = this.props;
 
     setTaskId(null);
 
@@ -71,9 +75,17 @@ class HardValidation extends Component {
   };
 
   render() {
-    const { hardValidation, isMobile, gender } = this.props;
+    const { 
+      hardValidation,
+      isMobile,
+      gender,
+    } = this.props;
 
-    const { front, side, measurementError } = hardValidation;
+    const { 
+      front,
+      side,
+      measurementError,
+    } = hardValidation;
 
     // front error handling
     let sideInTheFront = false;

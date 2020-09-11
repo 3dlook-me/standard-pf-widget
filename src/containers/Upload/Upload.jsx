@@ -1,4 +1,8 @@
-import { h, Component, Fragment } from 'preact';
+import { 
+  h,
+  Component,
+  Fragment,
+} from 'preact';
 import { route } from 'preact-router';
 import API from '@3dlook/saia-sdk/lib/api';
 import { connect } from 'react-redux';

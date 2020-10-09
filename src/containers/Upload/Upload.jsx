@@ -248,6 +248,7 @@ class Upload extends Component {
       setProcessingStatus,
       taskId,
       setTaskId,
+      isTableFlow,
     } = this.props;
 
     try {
@@ -309,6 +310,8 @@ class Upload extends Component {
         images.sideImage = sideImage;
       }
 
+      const photoFlowType = isTableFlow ? 'hand' : 'friend';
+
       if (!personId) {
         if (isFromDesktopToMobile) {
           this.flow.updateLocalState({ processStatus: 'Initiating Profile Creation' });
@@ -320,6 +323,7 @@ class Upload extends Component {
           gender,
           height,
           email,
+          photoFlowType,
           ...(weight && { weight }),
           measurementsType: 'all',
         });
@@ -367,6 +371,7 @@ class Upload extends Component {
 
         await this.api.person.update(personId, {
           ...images,
+          photoFlowType,
           deviceCoordinates: { ...deviceCoordinates },
         });
 

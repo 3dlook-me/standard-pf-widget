@@ -1,4 +1,4 @@
-import { 
+import {
   h,
   Component,
   Fragment,
@@ -18,6 +18,7 @@ import {
   wait,
   mobileFlowStatusUpdate,
   isMobileDevice,
+  getAsset,
 } from '../../helpers/utils';
 import {
   gaUploadOnContinue,
@@ -30,11 +31,8 @@ import {
   UploadBlock,
   Requirements,
 } from '../../components';
-import { getImg, getVideoRequirements } from '../../containers/Upload/utils';
 
 import './Upload.scss';
-import frontExample from '../../images/friend_front.png';
-import sideExample from '../../images/friend_side.png';
 
 let isPhoneLocked = false;
 let isRefreshed = false;
@@ -89,11 +87,11 @@ class Upload extends Component {
 
     document.removeEventListener(
       'visibilitychange',
-      this.handleVisibilityChange
+      this.handleVisibilityChange,
     );
     document.removeEventListener(
       'webkitvisibilitychange',
-      this.handleVisibilityChange
+      this.handleVisibilityChange,
     );
     window.removeEventListener('unload', this.reloadListener);
     window.removeEventListener('offline', this.setOfflineStatus);
@@ -449,7 +447,7 @@ class Upload extends Component {
       if (isFromDesktopToMobile) {
         localStorage.setItem(
           'saia-pf-widget-data',
-          JSON.stringify(measurements)
+          JSON.stringify(measurements),
         );
       }
 
@@ -492,10 +490,10 @@ class Upload extends Component {
       gaUploadOnContinue();
 
       if (
-        !recommendations ||
-        (!recommendations.normal &&
-          !recommendations.tight &&
-          !recommendations.loose)
+        !recommendations
+        || (!recommendations.normal
+          && !recommendations.tight
+          && !recommendations.loose)
       ) {
         route('/not-found', true);
         // ok, show just recommendations
@@ -514,7 +512,7 @@ class Upload extends Component {
             ...measurements,
             personId,
           },
-          origin
+          origin,
         );
 
         await this.flow
@@ -529,21 +527,21 @@ class Upload extends Component {
       if (!isPhoneLocked) {
         // hard validation part
         if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.sub_tasks
+          error
+          && error.response
+          && error.response.data
+          && error.response.data.sub_tasks
         ) {
           const subTasks = error.response.data.sub_tasks;
 
           const frontTask = subTasks.filter(
-            (item) => item.name.indexOf('front_') !== -1
+            (item) => item.name.indexOf('front_') !== -1,
           )[0];
           const sideTask = subTasks.filter(
-            (item) => item.name.indexOf('side_') !== -1
+            (item) => item.name.indexOf('side_') !== -1,
           )[0];
           const measurementError = subTasks.filter(
-            (item) => item.name.indexOf('measurement_') !== -1
+            (item) => item.name.indexOf('measurement_') !== -1,
           )[0];
 
           setHardValidation({
@@ -585,7 +583,7 @@ class Upload extends Component {
             const { returnUrl } = this.props;
 
             alert(
-              'Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile'
+              'Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile',
             );
 
             window.location.href = returnUrl;
@@ -754,8 +752,8 @@ class Upload extends Component {
 
               <Requirements
                 isTableFlow={isTableFlow}
-                video={getVideoRequirements(gender)}
-                photoBg={getImg(!isTableFlow && !frontImage, gender)}
+                video={isTableFlow && getAsset(true, gender, 'videoExample')}
+                photoBg={!isTableFlow && getAsset(false, gender, frontActive ? 'frontExample' : 'sideExample')}
               />
             </div>
             <div className="screen__footer">

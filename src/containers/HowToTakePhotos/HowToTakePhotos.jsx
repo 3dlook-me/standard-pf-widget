@@ -1,4 +1,4 @@
-import { 
+import {
   h,
   Component,
   createRef,
@@ -12,8 +12,7 @@ import { Loader, Stepper } from '../../components';
 import './HowToTakePhotos.scss';
 
 import FlowService from '../../services/flowService';
-import { mobileFlowStatusUpdate } from '../../helpers/utils';
-import { getVideo } from './utils';
+import { getAsset, mobileFlowStatusUpdate } from '../../helpers/utils';
 
 /**
  * HowToTakePhotos video page component
@@ -140,7 +139,7 @@ class HowToTakePhotos extends Component {
   };
 
   render() {
-    const { isTableFlow, gender, dfdsf } = this.props;
+    const { isTableFlow, gender } = this.props;
     const { videoText, isVideoLoaded } = this.state;
 
     return (
@@ -166,7 +165,7 @@ class HowToTakePhotos extends Component {
                 width="960"
                 height="540"
               >
-                <source src={getVideo(isTableFlow, gender)} type="video/mp4" />
+                <source src={getAsset(isTableFlow, gender, 'video')} type="video/mp4" />
               </video>
 
               <div className="how-to-take-photos__progress-bar">

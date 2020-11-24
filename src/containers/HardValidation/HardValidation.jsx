@@ -40,7 +40,7 @@ class HardValidation extends Component {
   componentDidMount() {
     gaHardValidationError();
 
-    const { 
+    const {
       pageReloadStatus,
       isFromDesktopToMobile,
       setTaskId,
@@ -75,13 +75,14 @@ class HardValidation extends Component {
   };
 
   render() {
-    const { 
+    const {
       hardValidation,
       isMobile,
       gender,
+      isTableFlow,
     } = this.props;
 
-    const { 
+    const {
       front,
       side,
       measurementError,
@@ -99,19 +100,16 @@ class HardValidation extends Component {
     if (front) {
       if (front === 'Side photo in the front') {
         sideInTheFront = true;
-        topMessageFront =
-          'It seems you uploaded side photo instead of the front one';
+        topMessageFront = 'It seems you uploaded side photo instead of the front one';
         tipMessageFront = 'Please upload the front photo.';
       } else if (front === "Can't detect the human body") {
         cannotDetectBodyFront = true;
         topMessageFront = 'We can’t detect your body on the front photo';
-        tipMessageFront =
-          'Please retake the front photo. Make sure your whole body is present on the photo.';
+        tipMessageFront = 'Please retake the front photo. Make sure your whole body is present on the photo.';
       } else if (front === 'The body is not full') {
         bodyIsNotFullFront = true;
         topMessageFront = 'Your full body should be present on the front photo';
-        tipMessageFront =
-          'Please retake the front photo. Make sure your whole body is present and the pose is correct.';
+        tipMessageFront = 'Please retake the front photo. Make sure your whole body is present and the pose is correct.';
       } else if (front.indexOf('The pose is wrong, check: ') !== -1) {
         wrongFrontPose = true;
 
@@ -134,19 +132,16 @@ class HardValidation extends Component {
     if (side) {
       if (side === 'Front photo in the side') {
         sideInTheSide = true;
-        topMessageSide =
-          'It seems you uploaded front photo instead of the side one';
+        topMessageSide = 'It seems you uploaded front photo instead of the side one';
         tipMessageSide = 'Please upload the side photo.';
       } else if (side === "Can't detect the human body") {
         cannotDetectBodySide = true;
         topMessageSide = 'We can’t detect your body on the side photo';
-        tipMessageSide =
-          'Please retake the side photo. Make sure your whole body is present on the photo.';
+        tipMessageSide = 'Please retake the side photo. Make sure your whole body is present on the photo.';
       } else if (side === 'The body is not full') {
         bodyIsNotFullSide = true;
         topMessageSide = 'Your full body should be present on the side photo';
-        tipMessageSide =
-          'Please retake the side photo. Make sure your whole body is present and the pose is correct.';
+        tipMessageSide = 'Please retake the side photo. Make sure your whole body is present and the pose is correct.';
       } else if (side.indexOf('The pose is wrong, check: ') !== -1) {
         wrongSidePose = true;
 
@@ -218,32 +213,33 @@ class HardValidation extends Component {
             {front ? (
               <li>
                 {tipMessageFront}
-                {sideInTheFront ||
-                cannotDetectBodyFront ||
-                bodyIsNotFullFront ||
-                wrongFrontPose ? (
+                {sideInTheFront
+                || cannotDetectBodyFront
+                || bodyIsNotFullFront
+                || wrongFrontPose ? (
                   <ImageExample
                     type="front"
                     isMobile={isMobile}
                     gender={gender}
                   />
-                ) : null}
+                  ) : null}
               </li>
             ) : null}
 
             {side ? (
               <li>
                 {tipMessageSide}
-                {sideInTheSide ||
-                cannotDetectBodySide ||
-                bodyIsNotFullSide ||
-                wrongSidePose ? (
+                {sideInTheSide
+                || cannotDetectBodySide
+                || bodyIsNotFullSide
+                || wrongSidePose ? (
                   <ImageExample
                     type="side"
                     isMobile={isMobile}
                     gender={gender}
+                    isTableFlow={isTableFlow}
                   />
-                ) : null}
+                  ) : null}
               </li>
             ) : null}
           </ol>

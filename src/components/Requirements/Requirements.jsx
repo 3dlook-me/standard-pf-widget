@@ -1,4 +1,4 @@
-import { 
+import {
   h,
   Component,
   createRef,
@@ -40,7 +40,7 @@ class Requirements extends Component {
 
   render() {
     const { isImageExampleLoaded, isVideoLoaded } = this.state;
-    const { 
+    const {
       isTableFlow,
       photoBg,
       video,

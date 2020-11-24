@@ -1,39 +1,79 @@
-import femaleTableVideo from '../video/table-flow-example.mp4';
-import femaleFriendVideo from '../video/friend-flow-example.mp4';
-import maleTableVideo from '../video/table-flow-male-example.mp4';
-import maleFriendVideo from '../video/friend-flow-male-example.mp4';
+import hardValdiationSideF from '../images/HV-side.png';
+import hardValdiationSideM from '../images/HV-side.png';
+import hardValdiationFrontF from '../images/HV-front.png';
+import hardValdiationFrontM from '../images/HV-front.png';
 
-import femaleTableRequirementsVideo from '../video/table-flow-requirements.mp4';
+import howToTakePhotosFriendVideoM from '../video/friend-flow-example.mp4';
+import howToTakePhotosFriendVideoF from '../video/friend-flow-example.mp4';
+import howToTakePhotosTableVideoM from '../video/table-flow-example.mp4';
+import howToTakePhotosTableVideoF from '../video/table-flow-example.mp4';
 
-import femaleFriendImgFront from '../images/friend_front.png';
-import femaleFriendImgSide from '../images/friend_side.png';
-import maleFriendImgFront from '../images/friend_male_front.png';
-import maleFriendImgSide from '../images/friend_male_side.png';
+import uploadFrontExampleF from '../images/friend_front_female.png';
+import uploadFrontExampleM from '../images/friend_front_male.png';
+import uploadSideExampleF from '../images/friend_side_female.png';
+import uploadSideExampleM from '../images/friend_side_male.png';
+import uploadVideoExampleM from '../video/table-flow-requirements.mp4';
+import uploadVideoExampleF from '../video/table-flow-requirements.mp4';
 
-import exampleSideFemale from '../images/HV-side.png';
-import exampleFrontFemale from '../images/HV-front.png';
-
-export const flow = {
-  femaleTable: {
-    video: femaleTableVideo,
-    videoRequirements: femaleTableRequirementsVideo,
-    exampleFrontImg: exampleFrontFemale,
-    exampleSideImg: exampleSideFemale,
+export const flowScreens = {
+  howToTakePhotos: {
+    friendFlow: {
+      male: {
+        video: howToTakePhotosFriendVideoM,
+      },
+      female: {
+        video: howToTakePhotosFriendVideoF,
+      },
+    },
+    tableFlow: {
+      male: {
+        video: howToTakePhotosTableVideoM,
+      },
+      female: {
+        video: howToTakePhotosTableVideoF,
+      },
+    },
   },
-  femaleFriend: {
-    video: femaleFriendVideo,
-    imgFront: femaleFriendImgFront,
-    imgSide: femaleFriendImgSide,
+  upload: {
+    friendFlow: {
+      male: {
+        frontExample: uploadFrontExampleM,
+        sideExample: uploadSideExampleM,
+      },
+      female: {
+        frontExample: uploadFrontExampleF,
+        sideExample: uploadSideExampleF,
+      },
+    },
+    tableFlow: {
+      male: {
+        videoExample: uploadVideoExampleM,
+      },
+      female: {
+        videoExample: uploadVideoExampleF,
+      },
+    },
   },
-  maleTable: {
-    video: maleTableVideo,
-    videoRequirements: maleFriendVideo,
-    exampleFrontImg: maleFriendImgFront,
-    exampleSideImg: maleFriendImgSide,
-  },
-  maleFriend: {
-    video: maleFriendVideo,
-    imgFront: maleFriendImgFront,
-    imgSide: maleFriendImgSide,
+  hardValidation: {
+    friendFlow: {
+      male: {
+        front: hardValdiationFrontM,
+        side: hardValdiationSideM,
+      },
+      female: {
+        front: hardValdiationFrontF,
+        side: hardValdiationSideF,
+      },
+    },
+    tableFlow: {
+      male: {
+        front: hardValdiationFrontM,
+        side: hardValdiationSideM,
+      },
+      female: {
+        front: hardValdiationFrontM,
+        side: hardValdiationSideM,
+      },
+    },
   },
 };

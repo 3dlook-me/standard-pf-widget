@@ -1,7 +1,7 @@
-import hardValdiationSideF from '../images/HV-side.png';
-import hardValdiationSideM from '../images/HV-side.png';
-import hardValdiationFrontF from '../images/HV-front.png';
-import hardValdiationFrontM from '../images/HV-front.png';
+import hardValdiationSideF from '../images/side-female.png';
+import hardValdiationSideM from '../images/side-male.png';
+import hardValdiationFrontF from '../images/front-female.png';
+import hardValdiationFrontM from '../images/front-male.png';
 
 import howToTakePhotosFriendVideoM from '../video/friend-flow-example.mp4';
 import howToTakePhotosFriendVideoF from '../video/friend-flow-example.mp4';
@@ -12,8 +12,8 @@ import uploadFrontExampleF from '../images/friend_front_female.png';
 import uploadFrontExampleM from '../images/friend_front_male.png';
 import uploadSideExampleF from '../images/friend_side_female.png';
 import uploadSideExampleM from '../images/friend_side_male.png';
-import uploadVideoExampleM from '../video/table-flow-requirements.mp4';
-import uploadVideoExampleF from '../video/table-flow-requirements.mp4';
+import uploadVideoExampleM from '../video/table-flow-requirements-male.mp4';
+import uploadVideoExampleF from '../video/table-flow-requirements-female.mp4';
 
 export const flowScreens = {
   howToTakePhotos: {

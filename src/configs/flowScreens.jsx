@@ -1,8 +1,3 @@
-import hardValdiationSideF from '../images/side-female.png';
-import hardValdiationSideM from '../images/side-male.png';
-import hardValdiationFrontF from '../images/front-female.png';
-import hardValdiationFrontM from '../images/front-male.png';
-
 import howToTakePhotosFriendVideoM from '../video/friend-flow-example-male.mp4';
 import howToTakePhotosFriendVideoF from '../video/friend-flow-example-female.mp4';
 import howToTakePhotosTableVideoM from '../video/table-flow-example-male.mp4';
@@ -14,6 +9,11 @@ import uploadSideExampleF from '../images/friend_side_female.png';
 import uploadSideExampleM from '../images/friend_side_male.png';
 import uploadVideoExampleM from '../video/table-flow-requirements-male.mp4';
 import uploadVideoExampleF from '../video/table-flow-requirements-female.mp4';
+
+import hardValidationSideF from '../images/side-female.png';
+import hardValidationSideM from '../images/side-male.png';
+import hardValidationFrontF from '../images/front-female.png';
+import hardValidationFrontM from '../images/front-male.png';
 
 export const flowScreens = {
   howToTakePhotos: {
@@ -57,22 +57,22 @@ export const flowScreens = {
   hardValidation: {
     friendFlow: {
       male: {
-        front: hardValdiationFrontM,
-        side: hardValdiationSideM,
+        front: hardValidationFrontM,
+        side: hardValidationSideM,
       },
       female: {
-        front: hardValdiationFrontF,
-        side: hardValdiationSideF,
+        front: hardValidationFrontF,
+        side: hardValidationSideF,
       },
     },
     tableFlow: {
       male: {
-        front: hardValdiationFrontM,
-        side: hardValdiationSideM,
+        front: hardValidationFrontM,
+        side: hardValidationSideM,
       },
       female: {
-        front: hardValdiationFrontM,
-        side: hardValdiationSideM,
+        front: hardValidationFrontM,
+        side: hardValidationSideM,
       },
     },
   },

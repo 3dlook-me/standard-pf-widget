@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { detectOS, browserName } from 'detect-browser';
-import { flowScreens } from '../configs/flow';
+import { flowScreens } from '../configs/flowScreens';
 
 /**
  * Get stringified GET params from object

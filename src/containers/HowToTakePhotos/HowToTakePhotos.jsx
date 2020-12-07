@@ -120,8 +120,7 @@ class HowToTakePhotos extends Component {
   setFriendFlowVideoText = (time) => {
     if (time < 3) {
       this.setState({
-        videoText:
-          'Ask someone to help take 2 photos of you. \n Keep the device at 90° angle at the waistline.',
+        videoText: 'Ask someone to help take 2 photos of you. \n Keep the device at 90° angle at the waistline.',
       });
     } else if (time > 3) {
       this.setState({

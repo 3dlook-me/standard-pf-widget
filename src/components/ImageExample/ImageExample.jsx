@@ -21,7 +21,7 @@ class ImageExample extends Component {
     this.setState({
       isImageActive: false,
     });
-  };
+  }
 
   /**
    * Show example image on touch start event
@@ -31,7 +31,7 @@ class ImageExample extends Component {
     this.setState({
       isImageActive: true,
     });
-  };
+  }
 
   render() {
     const { type, gender, isTableFlow } = this.props;

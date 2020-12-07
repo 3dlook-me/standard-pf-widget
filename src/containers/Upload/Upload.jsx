@@ -641,7 +641,7 @@ class Upload extends Component {
     setCamera(null);
     setIsTableFlowDisabled(true);
     setIsTableFlow(false);
-  };
+  }
 
   setDeviceCoordinates = (coords) => {
     const {

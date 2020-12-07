@@ -221,6 +221,7 @@ class HardValidation extends Component {
                     type="front"
                     isMobile={isMobile}
                     gender={gender}
+                    isTableFlow={isTableFlow}
                   />
                   ) : null}
               </li>

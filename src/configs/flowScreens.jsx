@@ -71,8 +71,8 @@ export const flowScreens = {
         side: hardValidationSideM,
       },
       female: {
-        front: hardValidationFrontM,
-        side: hardValidationSideM,
+        front: hardValidationFrontF,
+        side: hardValidationSideF,
       },
     },
   },

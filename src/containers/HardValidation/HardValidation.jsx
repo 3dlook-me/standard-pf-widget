@@ -66,13 +66,13 @@ class HardValidation extends Component {
       frontImage: !front,
       sideImage: !side,
     });
-  };
+  }
 
   back = () => {
     route('/upload', true);
 
     gaRetakePhotoError();
-  };
+  }
 
   render() {
     const {
@@ -102,7 +102,7 @@ class HardValidation extends Component {
         sideInTheFront = true;
         topMessageFront = 'It seems you uploaded side photo instead of the front one';
         tipMessageFront = 'Please upload the front photo.';
-      } else if (front === "Can't detect the human body") {
+      } else if (front === 'Can\'t detect the human body') {
         cannotDetectBodyFront = true;
         topMessageFront = 'We can’t detect your body on the front photo';
         tipMessageFront = 'Please retake the front photo. Make sure your whole body is present on the photo.';
@@ -134,7 +134,7 @@ class HardValidation extends Component {
         sideInTheSide = true;
         topMessageSide = 'It seems you uploaded front photo instead of the side one';
         tipMessageSide = 'Please upload the side photo.';
-      } else if (side === "Can't detect the human body") {
+      } else if (side === 'Can\'t detect the human body') {
         cannotDetectBodySide = true;
         topMessageSide = 'We can’t detect your body on the side photo';
         tipMessageSide = 'Please retake the side photo. Make sure your whole body is present on the photo.';

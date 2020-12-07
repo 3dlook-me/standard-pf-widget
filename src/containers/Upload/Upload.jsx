@@ -85,14 +85,8 @@ class Upload extends Component {
 
     clearInterval(this.timer);
 
-    document.removeEventListener(
-      'visibilitychange',
-      this.handleVisibilityChange,
-    );
-    document.removeEventListener(
-      'webkitvisibilitychange',
-      this.handleVisibilityChange,
-    );
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    document.removeEventListener('webkitvisibilitychange', this.handleVisibilityChange);
     window.removeEventListener('unload', this.reloadListener);
     window.removeEventListener('offline', this.setOfflineStatus);
   }
@@ -173,7 +167,7 @@ class Upload extends Component {
     } else {
       setCamera(null);
     }
-  };
+  }
 
   /**
    * Save side image to state
@@ -205,13 +199,13 @@ class Upload extends Component {
     }
 
     addSideImage(file);
-  };
+  }
 
   turnOffCamera = () => {
     const { setCamera } = this.props;
 
     setCamera(null);
-  };
+  }
 
   /**
    * On next button click handler
@@ -582,9 +576,7 @@ class Upload extends Component {
           if (error.message.includes('is not specified')) {
             const { returnUrl } = this.props;
 
-            alert(
-              'Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile',
-            );
+            alert('Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile');
 
             window.location.href = returnUrl;
 
@@ -602,7 +594,7 @@ class Upload extends Component {
         }
       }
     }
-  };
+  }
 
   triggerFrontImage = () => {
     const { setCamera } = this.props;
@@ -610,7 +602,7 @@ class Upload extends Component {
     gaOpenCameraFrontPhoto();
 
     setCamera('front');
-  };
+  }
 
   triggerSideImage = () => {
     const { setCamera } = this.props;
@@ -618,20 +610,20 @@ class Upload extends Component {
     gaOpenCameraSidePhoto();
 
     setCamera('side');
-  };
+  }
 
   openPhotoExample = (photoType) => {
     this.setState({
       isPhotoExample: true,
       photoType,
     });
-  };
+  }
 
   closePhotoExample = () => {
     this.setState({
       isPhotoExample: false,
     });
-  };
+  }
 
   setOfflineStatus = () => {
     const { setIsNetwork } = this.props;
@@ -641,7 +633,7 @@ class Upload extends Component {
     alert('Check your internet connection and try again');
 
     route('/not-found', true);
-  };
+  }
 
   disableTableFlow = () => {
     const { setIsTableFlowDisabled, setIsTableFlow, setCamera } = this.props;
@@ -663,7 +655,7 @@ class Upload extends Component {
     } else {
       addSideDeviceCoordinates(coords);
     }
-  };
+  }
 
   render() {
     const isDesktop = !isMobileDevice();

@@ -32,11 +32,11 @@ class Requirements extends Component {
 
   onImgExampleLoaded = () => {
     this.setState({ isImageExampleLoaded: true });
-  };
+  }
 
   onVideoLoad = () => {
     this.setState({ isVideoLoaded: true });
-  };
+  }
 
   render() {
     const { isImageExampleLoaded, isVideoLoaded } = this.state;

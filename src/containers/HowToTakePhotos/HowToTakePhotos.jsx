@@ -70,11 +70,11 @@ class HowToTakePhotos extends Component {
 
       mobileFlowStatusUpdate(this.flow, flowState);
     }
-  };
+  }
 
   componentWillUnmount = () => {
     this.$video.current.removeEventListener('timeupdate', this.handleProgress);
-  };
+  }
 
   handleProgress = () => {
     const { current } = this.$video;
@@ -88,20 +88,19 @@ class HowToTakePhotos extends Component {
     }
 
     this.$videoProgress.current.style.flexBasis = `${percent}%`;
-  };
+  }
 
   restartVideo = () => {
     const { current } = this.$video;
 
     current.currentTime = 0;
     current.play();
-  };
+  }
 
   setTableFlowVideoText = (time) => {
     if (time < 3.8) {
       this.setState({
-        videoText:
-          'Stand your device upright on a table. \n You can use an object to help hold it up.',
+        videoText: 'Stand your device upright on a table. \n You can use an object to help hold it up.',
       });
     } else if (time > 3.8 && time < 7) {
       this.setState({
@@ -113,11 +112,10 @@ class HowToTakePhotos extends Component {
       });
     } else if (time > 13.5) {
       this.setState({
-        videoText:
-          'Please turn up the volume and follow the voice instructions.',
+        videoText: 'Please turn up the volume and follow the voice instructions.',
       });
     }
-  };
+  }
 
   setFriendFlowVideoText = (time) => {
     if (time < 3) {
@@ -130,13 +128,13 @@ class HowToTakePhotos extends Component {
         videoText: 'For the side photo turn to your left.',
       });
     }
-  };
+  }
 
   onVideoLoad = () => {
     this.setState({
       isVideoLoaded: true,
     });
-  };
+  }
 
   render() {
     const { isTableFlow, gender } = this.props;
@@ -190,9 +188,7 @@ class HowToTakePhotos extends Component {
         </div>
 
         <div className="screen__footer">
-          <Link className="button" href="/upload">
-            Next
-          </Link>
+          <Link className="button" href="/upload">Next</Link>
         </div>
       </div>
     );

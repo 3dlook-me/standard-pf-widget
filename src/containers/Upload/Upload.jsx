@@ -16,7 +16,9 @@ import {
   send,
   transformRecomendations,
   wait,
-  mobileFlowStatusUpdate, isMobileDevice,
+  mobileFlowStatusUpdate,
+  isMobileDevice,
+  getAsset,
 } from '../../helpers/utils';
 import {
   gaUploadOnContinue,
@@ -31,8 +33,6 @@ import {
 } from '../../components';
 
 import './Upload.scss';
-import frontExample from '../../images/friend_front.png';
-import sideExample from '../../images/friend_side.png';
 
 let isPhoneLocked = false;
 let isRefreshed = false;
@@ -230,9 +230,7 @@ class Upload extends Component {
       deviceCoordinates,
     } = props;
 
-    let {
-      personId,
-    } = props;
+    let { personId } = props;
 
     const {
       setRecommendations,
@@ -314,7 +312,9 @@ class Upload extends Component {
 
       if (!personId) {
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Initiating Profile Creation' });
+          this.flow.updateLocalState({
+            processStatus: 'Initiating Profile Creation',
+          });
         }
 
         setProcessingStatus('Initiating Profile Creation');
@@ -334,7 +334,9 @@ class Upload extends Component {
         await wait(1000);
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Profile Creation Completed!' });
+          this.flow.updateLocalState({
+            processStatus: 'Profile Creation Completed!',
+          });
         }
 
         setProcessingStatus('Profile Creation Completed!');
@@ -357,7 +359,9 @@ class Upload extends Component {
         await wait(1000);
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Photo Upload Completed!' });
+          this.flow.updateLocalState({
+            processStatus: 'Photo Upload Completed!',
+          });
         }
 
         setProcessingStatus('Photo Upload Completed!');
@@ -387,7 +391,9 @@ class Upload extends Component {
         }
 
         if (isFromDesktopToMobile) {
-          this.flow.updateLocalState({ processStatus: 'Photo Upload Completed!' });
+          this.flow.updateLocalState({
+            processStatus: 'Photo Upload Completed!',
+          });
         }
 
         setProcessingStatus('Photo Upload Completed!');
@@ -395,7 +401,9 @@ class Upload extends Component {
       }
 
       if (isFromDesktopToMobile) {
-        this.flow.updateLocalState({ processStatus: 'Calculating your Measurements' });
+        this.flow.updateLocalState({
+          processStatus: 'Calculating your Measurements',
+        });
       }
 
       setProcessingStatus('Calculating your Measurements');
@@ -431,7 +439,10 @@ class Upload extends Component {
       });
 
       if (isFromDesktopToMobile) {
-        localStorage.setItem('saia-pf-widget-data', JSON.stringify(measurements));
+        localStorage.setItem(
+          'saia-pf-widget-data',
+          JSON.stringify(measurements),
+        );
       }
 
       let recommendations;
@@ -472,15 +483,16 @@ class Upload extends Component {
 
       gaUploadOnContinue();
 
-      if (!recommendations || (!recommendations.normal
-        && !recommendations.tight
-        && !recommendations.loose)) {
+      if (
+        !recommendations
+        || (!recommendations.normal
+          && !recommendations.tight
+          && !recommendations.loose)
+      ) {
         route('/not-found', true);
-      // ok, show just recommendations
+        // ok, show just recommendations
       } else {
-        const {
-          id,
-        } = person;
+        const { id } = person;
 
         const customerData = {};
 
@@ -488,26 +500,43 @@ class Upload extends Component {
           customerData.phone = phoneNumber;
         }
 
-        send('data', {
-          ...measurements,
-          personId,
-        }, origin);
+        send(
+          'data',
+          {
+            ...measurements,
+            personId,
+          },
+          origin,
+        );
 
-        await this.flow.updateState({
-          saiaPersonId: id,
-        }).then(() => {
-          route('/results', true);
-        });
+        await this.flow
+          .updateState({
+            saiaPersonId: id,
+          })
+          .then(() => {
+            route('/results', true);
+          });
       }
     } catch (error) {
       if (!isPhoneLocked) {
         // hard validation part
-        if (error && error.response && error.response.data && error.response.data.sub_tasks) {
+        if (
+          error
+          && error.response
+          && error.response.data
+          && error.response.data.sub_tasks
+        ) {
           const subTasks = error.response.data.sub_tasks;
 
-          const frontTask = subTasks.filter((item) => item.name.indexOf('front_') !== -1)[0];
-          const sideTask = subTasks.filter((item) => item.name.indexOf('side_') !== -1)[0];
-          const measurementError = subTasks.filter((item) => item.name.indexOf('measurement_') !== -1)[0];
+          const frontTask = subTasks.filter(
+            (item) => item.name.indexOf('front_') !== -1,
+          )[0];
+          const sideTask = subTasks.filter(
+            (item) => item.name.indexOf('side_') !== -1,
+          )[0];
+          const measurementError = subTasks.filter(
+            (item) => item.name.indexOf('measurement_') !== -1,
+          )[0];
 
           setHardValidation({
             front: frontTask.message,
@@ -536,7 +565,11 @@ class Upload extends Component {
         } else if (error && error.response && error.response.status === 400) {
           route('/not-found', true);
         } else if (error && error.response && error.response.data) {
-          const { detail, brand: brandError, body_part: bodyPartError } = error.response.data;
+          const {
+            detail,
+            brand: brandError,
+            body_part: bodyPartError,
+          } = error.response.data;
           alert(detail || brandError || bodyPartError);
           route('/not-found', true);
         } else {
@@ -579,7 +612,7 @@ class Upload extends Component {
     setCamera('side');
   }
 
-  openPhotoExample =(photoType) => {
+  openPhotoExample = (photoType) => {
     this.setState({
       isPhotoExample: true,
       photoType,
@@ -603,11 +636,7 @@ class Upload extends Component {
   }
 
   disableTableFlow = () => {
-    const {
-      setIsTableFlowDisabled,
-      setIsTableFlow,
-      setCamera,
-    } = this.props;
+    const { setIsTableFlowDisabled, setIsTableFlow, setCamera } = this.props;
 
     setCamera(null);
     setIsTableFlowDisabled(true);
@@ -654,7 +683,6 @@ class Upload extends Component {
     } = this.props;
 
     let title;
-    let photoBg;
     let frontActive = false;
     let sideActive = false;
 
@@ -664,17 +692,14 @@ class Upload extends Component {
       sideActive = frontImage && !sideImage;
     } else if ((!frontImage && !sideImage) || (!frontImage && sideImage)) {
       title = 'Take Front photo';
-      photoBg = frontExample;
       frontActive = true;
     } else if (frontImage && !sideImage) {
       title = 'Take Side photo';
-      photoBg = sideExample;
       sideActive = true;
     }
 
     return (
       <div className="screen active">
-
         {isDesktop ? (
           <div className="tutorial__desktop-msg">
             <h2>Please open this link on your mobile device</h2>
@@ -717,7 +742,11 @@ class Upload extends Component {
                 </div>
               </h3>
 
-              <Requirements isTableFlow={isTableFlow} photoBg={photoBg} />
+              <Requirements
+                isTableFlow={isTableFlow}
+                video={isTableFlow && getAsset(true, gender, 'videoExample')}
+                photoBg={!isTableFlow && getAsset(false, gender, frontActive ? 'frontExample' : 'sideExample')}
+              />
             </div>
             <div className="screen__footer">
               <button
@@ -747,7 +776,12 @@ class Upload extends Component {
         {/*  <PhotoExample photoType={photoType} closePhotoExample={this.closePhotoExample} /> */}
         {/* ) : null} */}
 
-        <Preloader isActive={isPending} status={sendDataStatus} isMobile={isMobile} />
+        <Preloader
+          isActive={isPending}
+          status={sendDataStatus}
+          isMobile={isMobile}
+          gender={gender}
+        />
 
         {camera ? (
           <Camera

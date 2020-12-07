@@ -11,10 +11,8 @@ import { Loader, Stepper } from '../../components';
 
 import './HowToTakePhotos.scss';
 
-import videoTableMode from '../../video/table-flow-example.mp4';
-import videoFriendMode from '../../video/friend-flow-example.mp4';
 import FlowService from '../../services/flowService';
-import { mobileFlowStatusUpdate } from '../../helpers/utils';
+import { getAsset, mobileFlowStatusUpdate } from '../../helpers/utils';
 
 /**
  * HowToTakePhotos video page component
@@ -47,7 +45,7 @@ class HowToTakePhotos extends Component {
     window.removeEventListener('unload', this.reloadListener);
   }
 
-  componentDidMount =() => {
+  componentDidMount = () => {
     const { current } = this.$video;
 
     current.play();
@@ -138,22 +136,18 @@ class HowToTakePhotos extends Component {
   }
 
   render() {
-    const { isTableFlow } = this.props;
+    const { isTableFlow, gender } = this.props;
     const { videoText, isVideoLoaded } = this.state;
-    const videoTrack = isTableFlow ? videoTableMode : videoFriendMode;
 
     return (
       <div className="screen active">
         <Stepper steps="9" current="6" />
 
         <div className="screen__content how-to-take-photos">
-
           <div className="how-to-take-photos__content">
             <h3 className="screen__title">how to take photos</h3>
 
-            {!isVideoLoaded ? (
-              <Loader />
-            ) : null}
+            {!isVideoLoaded ? <Loader /> : null}
 
             <div className="how-to-take-photos__video-wrap">
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
@@ -168,7 +162,7 @@ class HowToTakePhotos extends Component {
                 width="960"
                 height="540"
               >
-                <source src={videoTrack} type="video/mp4" />
+                <source src={getAsset(isTableFlow, gender, 'video')} type="video/mp4" />
               </video>
 
               <div className="how-to-take-photos__progress-bar">

@@ -8,7 +8,6 @@ import {
 import { Loader } from '../Loader';
 
 import './Requirements.scss';
-import videoTableFlowRequirements from '../../video/table-flow-requirements.mp4';
 
 /**
  * Requirements component
@@ -41,16 +40,18 @@ class Requirements extends Component {
 
   render() {
     const { isImageExampleLoaded, isVideoLoaded } = this.state;
-    const { isTableFlow, photoBg } = this.props;
+    const {
+      isTableFlow,
+      photoBg,
+      video,
+    } = this.props;
 
     return (
       <Fragment>
         {isTableFlow ? (
           // <Tabs activeTab={activeTab} />
           <div className="requirements__video-wrap">
-            {!isVideoLoaded ? (
-              <Loader />
-            ) : null}
+            {!isVideoLoaded ? <Loader /> : null}
 
             <video
               className="requirements__video"
@@ -63,7 +64,7 @@ class Requirements extends Component {
               width="960"
               height="540"
             >
-              <source src={videoTableFlowRequirements} type="video/mp4" />
+              <source src={video} type="video/mp4" />
             </video>
           </div>
         ) : (

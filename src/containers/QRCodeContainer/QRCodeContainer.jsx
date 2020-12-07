@@ -368,6 +368,7 @@ class QRCodeContainer extends Component {
       sendDataStatus,
       phoneCountry,
       phoneUserPart,
+      gender,
     } = this.props;
 
     const qrCopyUrl = copyUrl || qrCodeUrl;
@@ -456,7 +457,11 @@ class QRCodeContainer extends Component {
           </button>
         </div>
 
-        <Preloader isActive={isPending} status={sendDataStatus} />
+        <Preloader
+          isActive={isPending}
+          status={sendDataStatus}
+          gender={gender}
+        />
       </div>
 
     );

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { detectOS, browserName } from 'detect-browser';
+import { flowScreens } from '../configs/flowScreens';
 
 /**
  * Get stringified GET params from object
@@ -479,4 +480,19 @@ export const closeSelectsOnResize = () => {
   for (const el of $selects) {
     el.blur();
   }
+};
+
+export const snakeToCamel = (str) => str.replace(
+  /([-_][a-z])/g,
+  (group) => group
+    .toUpperCase()
+    .replace('-', '')
+    .replace('_', ''),
+);
+
+export const getAsset = (isTableFlow, gender, role) => {
+  const page = snakeToCamel(window.location.hash).replace('#/', '');
+  const flowType = isTableFlow ? 'tableFlow' : 'friendFlow';
+
+  return flowScreens[page][flowType][gender][role];
 };

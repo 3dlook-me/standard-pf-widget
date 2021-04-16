@@ -21,11 +21,13 @@ import SaiaButton from './button';
   }
 
   const button = new SaiaButton({
-    key: API_KEY,
+    // key: API_KEY,
+    key: '9850ee4a85f4fc4bfe22c4f3c76546cfb1e9f42f',
     widgetUrl: WIDGET_HOST,
     photosFromGallery: true,
     brand: 'butter denim midrise',
-    bodyPart: 'top',
+    // bodyPart: 'top',
+    size_chart_uuid: 'c7271109-5f01-438c-a187-1f367f747422',
   });
 
   const isButtonVisible = await button.checkButtonVisibility();

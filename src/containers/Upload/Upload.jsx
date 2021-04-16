@@ -247,6 +247,7 @@ class Upload extends Component {
       taskId,
       setTaskId,
       isTableFlow,
+      sizeChartUUID,
     } = this.props;
 
     try {
@@ -448,7 +449,7 @@ class Upload extends Component {
       let recommendations;
       let originalRecommendations;
 
-      if (brand && bodyPart) {
+      if (brand && bodyPart && !sizeChartUUID) {
         originalRecommendations = await this.api.sizechart.getSize({
           gender,
           hips: person.volume_params.high_hips,
@@ -459,6 +460,17 @@ class Upload extends Component {
           inseam: person.front_params.inseam,
           brand,
           body_part: bodyPart,
+        });
+      } else if (sizeChartUUID) {
+        originalRecommendations = await this.api.sizechart.getSize({
+          gender,
+          hips: person.volume_params.high_hips,
+          chest: person.volume_params.chest,
+          waist: person.volume_params.waist,
+          low_hips: person.volume_params.low_hips,
+          brand,
+          body_part: 'placeholder',
+          uuid: sizeChartUUID,
         });
       } else {
         originalRecommendations = await this.api.product.getRecommendations({

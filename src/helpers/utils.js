@@ -496,3 +496,9 @@ export const getAsset = (isTableFlow, gender, role) => {
 
   return flowScreens[page][flowType][gender][role];
 };
+
+export const getSearchParam = (url, key) => {
+  const params = new URLSearchParams(url);
+
+  return params.get(key);
+};

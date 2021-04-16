@@ -286,7 +286,7 @@ class SaiaButton {
       } else if (this.defaults.size_chart_uuid) {
         originalRecommendations = await this.api.sizechart.getSize({
           ...measurements,
-          brand: this.defaults.brand,
+          brand: 'placeholder',
           body_part: 'placeholder',
           uuid: this.defaults.size_chart_uuid,
         });

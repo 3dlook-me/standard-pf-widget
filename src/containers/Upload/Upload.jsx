@@ -468,7 +468,7 @@ class Upload extends Component {
           chest: person.volume_params.chest,
           waist: person.volume_params.waist,
           low_hips: person.volume_params.low_hips,
-          brand,
+          brand: 'placeholder',
           body_part: 'placeholder',
           uuid: sizeChartUUID,
         });

@@ -6,6 +6,7 @@ import {
   browserValidation,
   isMobileDevice,
   parseGetParams,
+  getSearchParam,
 } from '../../helpers/utils';
 import { gaWelcomeOnContinue } from '../../helpers/ga';
 import actions from '../../store/actions';
@@ -48,9 +49,10 @@ class Welcome extends Component {
       setWidgetUrl,
       resetState,
       setIsPhotosFromGallery,
+      setSizeChartUUID,
     } = this.props;
 
-    const token = matches.key || API_KEY || parseGetParams().key;
+    const token = getSearchParam(window.location.search, 'key') || API_KEY || parseGetParams().key;
     const brand = matches.brand || TEST_BRAND;
     const bodyPart = matches.body_part || TEST_BODY_PART;
     const photosFromGallery = matches.photosFromGallery || false;
@@ -89,6 +91,7 @@ class Welcome extends Component {
       setToken(token);
       setBrand(brand);
       setBodyPart(bodyPart);
+      setSizeChartUUID(matches.size_chart_uuid);
       setProductUrl(matches.product);
       setOrigin(matches.origin);
       setIsMobile(isMobileDevice());

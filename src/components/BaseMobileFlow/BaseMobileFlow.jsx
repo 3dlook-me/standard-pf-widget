@@ -97,7 +97,7 @@ class BaseMobileFlow extends Component {
         setPhoneNumber(flowStateResult.state.phoneNumber);
         setProductId(flowStateResult.state.productId);
         setUnits(flowStateResult.state.units);
-        setSizeChartUUID(flowStateResult.state.size_chart_uuid);
+        setSizeChartUUID(flowStateResult.state.sizeChartUUID);
       });
   }
 }

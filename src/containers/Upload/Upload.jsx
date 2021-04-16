@@ -530,7 +530,6 @@ class Upload extends Component {
           });
       }
     } catch (error) {
-      console.log(error)
       if (!isPhoneLocked) {
         // hard validation part
         if (
@@ -591,7 +590,7 @@ class Upload extends Component {
 
             alert('Oops...\nThe server lost connection...\nPlease restart widget flow on the desktop or start again on mobile');
 
-            // window.location.href = returnUrl;
+            window.location.href = returnUrl;
 
             return;
           }

@@ -53,6 +53,7 @@ class SaiaButton {
       bodyPart: '',
       returnUrl: `${window.location.origin}${window.location.pathname}`,
       returnUrlDesktop: false,
+      size_chart_uuid: null,
       ...options,
 
       product: {
@@ -250,6 +251,10 @@ class SaiaButton {
       url += `&photosFromGallery=${this.defaults.photosFromGallery}`;
     }
 
+    if (this.defaults.size_chart_uuid) {
+      url += `&size_chart_uuid=${this.defaults.size_chart_uuid}`;
+    }
+
     if (!this.isMobile) {
       this.modal.querySelector('iframe').src = url;
     } else {
@@ -272,11 +277,18 @@ class SaiaButton {
       let recomendations;
       let originalRecommendations;
 
-      if (this.defaults.brand && this.defaults.bodyPart) {
+      if (this.defaults.brand && this.defaults.bodyPart && !this.defaults.size_chart_uuid) {
         originalRecommendations = await this.api.sizechart.getSize({
           ...measurements,
           brand: this.defaults.brand,
           body_part: this.defaults.bodyPart,
+        });
+      } else if (this.defaults.size_chart_uuid) {
+        originalRecommendations = await this.api.sizechart.getSize({
+          ...measurements,
+          brand: this.defaults.brand,
+          body_part: 'placeholder',
+          uuid: this.defaults.size_chart_uuid,
         });
       } else {
         originalRecommendations = await this.api.product.getRecommendations({

@@ -8,6 +8,7 @@ export const INITIAL_STATE = {
   isFromDesktopToMobile: false,
   isMobile: false,
   token: null,
+  sizeChartUUID: null,
 
   gender: null,
   height: null,
@@ -360,6 +361,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         taskId: action.payload,
+      };
+
+    case CONSTANTS.SET_SIZE_CHART_UUID:
+      return {
+        ...state,
+        sizeChartUUID: action.payload,
       };
 
     default:

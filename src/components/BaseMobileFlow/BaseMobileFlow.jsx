@@ -1,7 +1,11 @@
 import { h, Component } from 'preact';
 
 import FlowService from '../../services/flowService';
-import { isMobileDevice, parseGetParams } from '../../helpers/utils';
+import {
+  getSearchParam,
+  isMobileDevice,
+  parseGetParams
+} from '../../helpers/utils';
 
 /**
  * Mobile flow page component
@@ -38,6 +42,7 @@ class BaseMobileFlow extends Component {
       setWeight,
       resetState,
       setIsPhotosFromGallery,
+      setSizeChartUUID,
     } = this.props;
 
     if (!isMobileDevice()) {
@@ -46,7 +51,7 @@ class BaseMobileFlow extends Component {
       return;
     }
 
-    const token = matches.key || API_KEY || parseGetParams().key;
+    const token = getSearchParam(window.location.search, 'key') || API_KEY || parseGetParams().key;
     setToken(token);
 
     if (!matches.id) { return; }
@@ -92,6 +97,7 @@ class BaseMobileFlow extends Component {
         setPhoneNumber(flowStateResult.state.phoneNumber);
         setProductId(flowStateResult.state.productId);
         setUnits(flowStateResult.state.units);
+        setSizeChartUUID(flowStateResult.state.sizeChartUUID);
       });
   }
 }

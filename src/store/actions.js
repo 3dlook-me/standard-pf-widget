@@ -47,6 +47,7 @@ export const CONSTANTS = {
   SET_IS_TABLE_FLOW: 'SET_IS_TABLE_FLOW',
   SET_IS_TABLE_FLOW_DISABLED: 'SET_IS_TABLE_FLOW_DISABLED',
   SET_TASK_ID: 'SET_TASK_ID',
+  SET_SIZE_CHART_UUID: 'SET_SIZE_CHART_UUID',
 };
 
 /**
@@ -508,6 +509,17 @@ export const setTaskId = (id) => ({
   payload: id,
 });
 
+/**
+ * Set sizeChartUUID
+ *
+ * @param {string} uuid - size chart uuid
+ */
+export const setSizeChartUUID = (uuid) => ({
+  type: CONSTANTS.SET_SIZE_CHART_UUID,
+  payload: uuid,
+});
+
+
 export default {
   setMeasurements,
   resetState,
@@ -553,5 +565,6 @@ export default {
   setIsTableFlowDisabled,
   addFrontDeviceCoordinates,
   addSideDeviceCoordinates,
-  setTaskId
+  setTaskId,
+  setSizeChartUUID,
 };

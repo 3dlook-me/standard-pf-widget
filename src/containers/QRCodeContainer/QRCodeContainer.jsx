@@ -149,6 +149,7 @@ class QRCodeContainer extends Component {
       bodyPart,
       returnUrl,
       productId,
+      sizeChartUUID,
     } = props;
 
     if (token && flowId && !this.api && !this.flow) {
@@ -174,6 +175,7 @@ class QRCodeContainer extends Component {
         returnUrl,
         productId,
         ...(weight && { weight }),
+        ...(sizeChartUUID && { sizeChartUUID }),
       });
 
       if (!isMobile) {
